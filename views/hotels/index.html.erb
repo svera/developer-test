@@ -1,0 +1,17 @@
+<h1>Hotels</h1> 
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @hotels.each do |hotel| %>
+    <tr>
+      <td><%= hotel.name %></td>
+      <td><%= link_to 'New', new_booking_path %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

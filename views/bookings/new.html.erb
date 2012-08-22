@@ -1,0 +1,31 @@
+<h2>Book a room</h2>
+
+<%# We make the booking controller a nested resource of the hotel the be booked -%>
+<%# So the booking URL can take this form: http://www.splendia.com/hotels/hotel-name/booking/new -%>
+<%= form_for @booking, :url => hotel_bookings_path do |f| %>
+  <%# Use a partial to show validation error messages -%>
+  <%= render "shared/error_messages", :target => @booking %>
+  <fieldset>
+    <legend>Booking data</legend>
+    <%= f.label :date %>
+    <%= f.datetime_select :date %>
+    <%= f.label :room %>
+    <%= f.collection_select(:room_id, City.all, :id, :name) %>
+  </fieldset>
+  <%# We use a nested form, so the user and booking info get saved at the same time and on the same transaction -%> 
+  <%= f.fields_for :customer do |ff| %>
+    <fieldset>
+      <legend>Customer data</legend>
+      <%= ff.label :first_name %>
+      <%= ff.text_field :first_name %>
+
+      <%= ff.label :last_name %>
+      <%= ff.text_field :last_name %>
+
+      <%= ff.label :email %>
+      <%= ff.email_field :email %>
+    </fieldset>
+  <% end %>
+
+  <%= f.submit 'Book' %>
+<% end %>
